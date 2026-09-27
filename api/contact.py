@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 
 from database.db import get_db
 from database.models import Contact
+from core.whatsapp_notify import send_contact_whatsapp
+from core.email_notify import send_contact_email
 
 router = APIRouter()
 
@@ -32,6 +34,12 @@ def submit_contact(req: ContactRequest, db: Session = Depends(get_db)):
     )
     db.add(contact)
     db.commit()
+
+    import threading
+    contact_data = {"name": req.name, "email": req.email, "phone": req.phone,
+                    "subject": req.subject, "message": req.message}
+    threading.Thread(target=send_contact_whatsapp, args=(contact_data,), daemon=True).start()
+    threading.Thread(target=send_contact_email, args=(contact_data,), daemon=True).start()
 
     return {
         "success": True,

@@ -15,6 +15,7 @@ from database.db import get_db
 from database.models import Booking
 from core.test_catalog import TEST_CATALOG, all_tests_list
 from core.email_notify import send_booking_email
+from core.whatsapp_notify import send_booking_whatsapp
 
 router = APIRouter()
 
@@ -139,26 +140,24 @@ def submit_booking(req: BookingRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(booking)
 
-    # Send email notification to lab (background, non-blocking)
+    # Send notifications in background (non-blocking)
+    notification_data = {
+        "reference":        ref,
+        "patient_name":     req.patient_name,
+        "phone":            req.phone,
+        "email":            req.email,
+        "age":              req.age,
+        "gender":           req.gender,
+        "symptoms":         req.symptoms,
+        "notes":            req.notes,
+        "tests":            tests_detail,
+        "total_cost":       total,
+        "appointment_date": req.appointment_date,
+        "appointment_slot": req.appointment_slot,
+    }
     import threading
-    threading.Thread(
-        target=send_booking_email,
-        args=({
-            "reference":        ref,
-            "patient_name":     req.patient_name,
-            "phone":            req.phone,
-            "email":            req.email,
-            "age":              req.age,
-            "gender":           req.gender,
-            "symptoms":         req.symptoms,
-            "notes":            req.notes,
-            "tests":            tests_detail,
-            "total_cost":       total,
-            "appointment_date": req.appointment_date,
-            "appointment_slot": req.appointment_slot,
-        },),
-        daemon=True,
-    ).start()
+    threading.Thread(target=send_booking_email, args=(notification_data,), daemon=True).start()
+    threading.Thread(target=send_booking_whatsapp, args=(notification_data,), daemon=True).start()
 
     return BookingResponse(
         reference=ref,

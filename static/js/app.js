@@ -162,6 +162,9 @@ function filterTests(category, btn) {
 // ── Init ─────────────────────────────────────────────────────
 renderHomePage();
 
+// ── Expose functions used by inline HTML handlers ─────────────
+window.toggleFaq = toggleFaq;
+
 // ── AOS Init ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof AOS !== 'undefined') {

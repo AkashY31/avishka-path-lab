@@ -16,18 +16,18 @@ Tagline: Precision Diagnostics at Prices You Can Afford
 
 AVAILABLE TESTS & PRICES
 -------------------------
-Complete Blood Count (CBC) — ₹300
+Complete Blood Count (CBC) — ₹600
 Blood Sugar Fasting (BSF) — ₹120
 Blood Sugar Post Prandial (BSPP) — ₹120
 Blood Sugar Random (BSR) — ₹120
 Thyroid Profile (T3, T4, TSH) — ₹600
 Liver Function Test (LFT) — ₹400
-Kidney Function Test (KFT) — ₹350
+Kidney Function Test (KFT) — ₹550
 Lipid Profile — ₹350
 Urine Routine & Microscopy — ₹100
 Vitamin D (25-OH) — ₹800
 Vitamin B12 — ₹600
-HbA1c (Glycated Hemoglobin) — ₹350
+HbA1c (Glycated Hemoglobin) — ₹650
 ECG / Electrocardiogram — ₹200
 
 PACKAGES
